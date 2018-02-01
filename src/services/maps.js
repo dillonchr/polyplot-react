@@ -4,6 +4,7 @@ export default class MapsService {
     places;
     userMarker;
     center;
+    placeMarkers = [];
 
     constructor(elem) {
         this.sdk.then(() => {
@@ -42,7 +43,7 @@ export default class MapsService {
     }
 
     addPlaceMarker(coords, color) {
-        return new window.google.maps.Marker({
+        const m = new window.google.maps.Marker({
             icon: {
                 path: window.google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
                 fillColor: color,
@@ -53,6 +54,14 @@ export default class MapsService {
             },
             map: this.map,
             position: coords
+        });
+        this.placeMarkers.push(m);
+        return m;
+    }
+
+    removeAllPlaceMarkers() {
+        this.placeMarkers.forEach(m => {
+            m.setMap(null);
         });
     }
 

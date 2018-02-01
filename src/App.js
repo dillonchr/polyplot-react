@@ -33,10 +33,12 @@ export default class App extends Component {
             });
     };
 
+    clearMarkers = () => this.map.removeAllPlaceMarkers();
+
     render() {
         return (
             <div>
-                <SearchContainer search={this.search} />
+                <SearchContainer search={this.search} clear={this.clearMarkers} />
                 <Map onRef={elem => this.dom = elem} />
             </div>
         );

@@ -3,12 +3,19 @@ import './search-container.css';
 
 export default class SearchContainer extends React.Component {
     state = {
-        queries: ['']
+        queries: [''],
+        frozen: false
     };
 
     handleFormSubmit = e => {
         e.preventDefault();
-        this.props.search(this.state.queries.filter(q => !!q));
+        if (!this.state.frozen && this.state.queries.filter(q => !!q).length > 0) {
+            this.props.search(this.state.queries.filter(q => !!q));
+            this.setState({ frozen: true });
+        } else if (this.state.frozen) {
+            this.props.clear();
+            this.setState({ frozen: false, queries: [''] });
+        }
     };
 
     onInput = (i, value) => {
@@ -25,11 +32,12 @@ export default class SearchContainer extends React.Component {
 
     renderInputs() {
         return this.state.queries
+            .filter(q => !this.state.frozen || !!q)
             .map((q, i) => {
                 const onInput = ({target}) => this.onInput(i, target.value);
                 return (
                     <label key={i} className="search__label">
-                        <input key={i} className="search__input" placeholder="Search" value={q} onChange={onInput}/>
+                        <input key={i} readOnly={this.state.frozen} className="search__input" placeholder="Search" value={q} onChange={onInput}/>
                     </label>
                 );
             });
@@ -41,7 +49,9 @@ export default class SearchContainer extends React.Component {
                 <h1 className="search__header">PolyPlot</h1>
                 <form className="search__form" onSubmit={this.handleFormSubmit}>
                     {this.renderInputs()}
-                    <button className="search__button" onClick={this.handleFormSubmit}>Search</button>
+                    <button className="search__button" onClick={this.handleFormSubmit}>
+                        {this.state.frozen ? 'Clear' : 'Search'}
+                    </button>
                 </form>
             </div>
         );
