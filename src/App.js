@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MapService from './services/maps';
 import Map from './components/map';
 import SearchContainer from './components/search-container';
+import colors from './colors';
 
 export default class App extends Component {
     map;
@@ -22,10 +23,13 @@ export default class App extends Component {
             });
     }
 
-    search = query => {
-        this.map.searchForPlace(query)
+    search = queries => {
+        this.map.searchForPlaces(queries)
             .then(results => {
-                results.map(r => this.map.addPlaceMarker(r.geometry.location, 'crimson'));
+                results
+                    .forEach((res, i) => {
+                        res.map(r => this.map.addPlaceMarker(r.geometry.location, colors[i]));
+                    });
             });
     };
 

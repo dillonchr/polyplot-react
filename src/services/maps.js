@@ -7,7 +7,6 @@ export default class MapsService {
 
     constructor(elem) {
         this.sdk.then(() => {
-            console.log('map done');
             this.map = new window.google.maps.Map(elem, {
                 center: this.center || {lat: 36.0996699, lng: -95.843804},
                 zoom: 13,
@@ -55,6 +54,10 @@ export default class MapsService {
             map: this.map,
             position: coords
         });
+    }
+
+    searchForPlaces(queries) {
+        return Promise.all(queries.map(this.searchForPlace.bind(this)));
     }
 
     searchForPlace(keyword) {

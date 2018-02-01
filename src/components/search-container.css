@@ -1,5 +1,5 @@
 .search {
-    bottom: 2em;
+    top: 2em;
     left: 2em;
     position: fixed;
     z-index: 2;
@@ -8,14 +8,88 @@
 .search__header {
     background-color: #85FFBD;
     background-image: linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%);
-    border: solid 1px #999;
+    border: solid 1px orange;
     border-bottom: none;
     margin: 0;
     padding: 1rem;
     text-align: center;
 }
 
+.search__form {
+    display: flex;
+    flex-direction: column;
+}
+
+.search__label {
+    position: relative;
+}
+
+.search__label:focus::after {
+    opacity: 1;
+}
+
+.search__label::after {
+    background: crimson;
+    border-radius: 50%;
+    content: "";
+    height: 1.5rem;
+    opacity: 0.5;
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    width: 1.5rem;
+}
+
+.search__label:nth-of-type(2)::after {
+    background: orange;
+}
+
+.search__label:nth-of-type(3)::after {
+    background: yellow;
+}
+
+.search__label:nth-of-type(4)::after {
+    background: green;
+}
+
+.search__label:nth-of-type(5)::after {
+    background: blue;
+}
+
+.search__label:nth-of-type(6)::after {
+    background: indigo;
+}
+
+.search__label:nth-of-type(7)::after {
+    background: violet;
+}
+
 .search__input {
-    padding: 0.5em;
+    border: solid 1px orange;
+    border-bottom: solid 1px #eee;
+    border-top: none;
+    color: #666;
+    font-size: 1.25rem;
+    outline: none;
+    padding: 0.5rem;
     width: 250px;
+}
+
+.search__input:focus {
+    background: white;
+    color: #333;
+}
+
+.search__button {
+    background-color: #08AEEA;
+    border: solid 1px orange;
+    border-top: none;
+    color: white;
+    font-weight: bold;
+    padding: .5rem;
+    transition: background 0.2s ease-in-out;
+}
+
+.search__button:hover {
+    background: #2AF598;;
 }
