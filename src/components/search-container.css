@@ -1,0 +1,11 @@
+.search__form {
+    bottom: 2em;
+    left: 2em;
+    position: fixed;
+    z-index: 2;
+}
+
+.search__input {
+    padding: 0.5em;
+    width: 250px;
+}

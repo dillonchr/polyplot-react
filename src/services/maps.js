@@ -6,7 +6,7 @@ export default class MapsService {
     center;
 
     constructor(elem) {
-        this.loadSDK().then(() => {
+        this.sdk.then(() => {
             this.map = new window.google.maps.Map(elem, {
                 center: this.coords || {lat: -34.397, lng: 150.644},
                 zoom: 13
@@ -24,21 +24,22 @@ export default class MapsService {
     }
 
     addUserMarker(coords) {
-        if (this.userMarker) {
-            this.userMarker.setMap(null);
+        if (!this.userMarker) {
+            this.userMarker = new window.google.maps.Marker({
+                icon: {
+                    path: window.google.maps.SymbolPath.CIRCLE,
+                    fillColor: 'powderblue',
+                    fillOpacity: 1,
+                    strokeColor: 'dodgerblue',
+                    strokeWeight: 2,
+                    scale: 5
+                },
+                map: this.map,
+                position: coords
+            });
+        } else {
+            this.userMarker.setPosition(coords);
         }
-        this.userMarker = new window.google.maps.Marker({
-            icon: {
-                path: window.google.maps.SymbolPath.CIRCLE,
-                fillColor: 'powderblue',
-                fillOpacity: 1,
-                strokeColor: 'dodgerblue',
-                strokeWeight: 2,
-                scale: 5
-            },
-            map: this.map,
-            position: coords
-        });
     }
 
     addPlaceMarker(coords, color) {
@@ -71,7 +72,7 @@ export default class MapsService {
         });
     }
 
-    loadSDK() {
+    get sdk() {
         if (!this._sdkPromise) {
             this._sdkPromise = new Promise((resolve, reject) => {
                 const script = document.createElement('script');
