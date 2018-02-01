@@ -1,1 +1,1 @@
-export default ['crimson', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+export default ['#FF0000', '#F76B1C', '#FEE140', '#16A085', '#08AEEA', '#2B86C5', '#B721FF'];

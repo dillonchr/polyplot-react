@@ -29,39 +29,39 @@
 }
 
 .search__label::after {
-    background: crimson;
-    border-radius: 50%;
+    background: #FF0000;
+    border-radius: 1rem;
     content: "";
     height: 1.5rem;
     opacity: 0.5;
     position: absolute;
     right: 0.5rem;
     top: 0.5rem;
-    width: 1.5rem;
+    width: 3rem;
 }
 
 .search__label:nth-of-type(2)::after {
-    background: orange;
+    background: #F76B1C;
 }
 
 .search__label:nth-of-type(3)::after {
-    background: yellow;
+    background: #FEE140;
 }
 
 .search__label:nth-of-type(4)::after {
-    background: green;
+    background: #16A085;
 }
 
 .search__label:nth-of-type(5)::after {
-    background: blue;
+    background: #08AEEA;
 }
 
 .search__label:nth-of-type(6)::after {
-    background: indigo;
+    background: #2B86C5;
 }
 
 .search__label:nth-of-type(7)::after {
-    background: violet;
+    background: #B721FF;
 }
 
 .search__input {
