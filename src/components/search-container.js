@@ -17,12 +17,15 @@ export default class SearchContainer extends React.Component {
 
     render() {
         return (
-            <form className="search__form" onSubmit={this.handleFormSubmit}>
-                <input  className="search__input"
-                        placeholder="Search for places in bounds..."
-                        value={this.state.value}
-                        onChange={this.onInput}/>
-            </form>
+            <div className="search">
+                <h1 className="search__header">PolyPlot</h1>
+                <form className="search__form" onSubmit={this.handleFormSubmit}>
+                    <input  className="search__input"
+                            placeholder="Search for places in bounds..."
+                            value={this.state.value}
+                            onChange={this.onInput}/>
+                </form>
+            </div>
         );
     }
 }

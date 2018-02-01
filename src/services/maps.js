@@ -7,9 +7,11 @@ export default class MapsService {
 
     constructor(elem) {
         this.sdk.then(() => {
+            console.log('map done');
             this.map = new window.google.maps.Map(elem, {
-                center: this.coords || {lat: -34.397, lng: 150.644},
-                zoom: 13
+                center: this.center || {lat: 36.0996699, lng: -95.843804},
+                zoom: 13,
+                mapTypeControl: false
             });
             this.places = new window.google.maps.places.PlacesService(this.map);
         });
@@ -17,10 +19,8 @@ export default class MapsService {
 
     setCenter(coords) {
         this.center = coords;
-        if (this.map) {
-            this.map.setCenter(coords);
-            this.addUserMarker(coords);
-        }
+        this.map.setCenter(coords);
+        this.addUserMarker(coords);
     }
 
     addUserMarker(coords) {

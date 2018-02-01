@@ -8,15 +8,18 @@ export default class App extends Component {
 
     componentDidMount() {
         this.map = new MapService(this.dom);
-        if ('geolocation' in navigator) {
-            navigator.geolocation.getCurrentPosition(pos => {
-                this.map.setCenter({lat: pos.coords.latitude, lng: pos.coords.longitude});
-            }, () => {
-                console.error('CURRENT_LOCATION: Not permitted access to location');
+        this.map.sdk
+            .then(() => {
+                if ('geolocation' in navigator) {
+                    navigator.geolocation.getCurrentPosition(pos => {
+                        this.map.setCenter({lat: pos.coords.latitude, lng: pos.coords.longitude});
+                    }, () => {
+                        console.error('CURRENT_LOCATION: Not permitted access to location');
+                    });
+                } else {
+                    console.error('CURRENT_LOCATION: Unsupported in current browser');
+                }
             });
-        } else {
-            console.error('CURRENT_LOCATION: Unsupported in current browser');
-        }
     }
 
     search = query => {
