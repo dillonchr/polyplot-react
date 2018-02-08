@@ -4,17 +4,17 @@ import './search-container.css';
 export default class SearchContainer extends React.Component {
     state = {
         queries: [''],
-        frozen: false
+        pristine: false
     };
 
     handleFormSubmit = e => {
         e.preventDefault();
-        if (!this.state.frozen && this.state.queries.filter(q => !!q).length > 0) {
+        if (!this.state.pristine && this.state.queries.filter(q => !!q).length > 0) {
             this.props.search(this.state.queries.filter(q => !!q));
-            this.setState({ frozen: true });
-        } else if (this.state.frozen) {
+            this.setState({ pristine: true });
+        } else if (this.state.pristine) {
             this.props.clear();
-            this.setState({ frozen: false, queries: [''] });
+            this.setState({ pristine: false, queries: [''] });
         }
     };
 
@@ -30,14 +30,16 @@ export default class SearchContainer extends React.Component {
         this.setState({ queries });
     };
 
+    removePristine = () => this.setState({ pristine: false });
+
     renderInputs() {
         return this.state.queries
-            .filter(q => !this.state.frozen || !!q)
+            .filter(q => !this.state.pristine || !!q)
             .map((q, i) => {
                 const onInput = ({target}) => this.onInput(i, target.value);
                 return (
                     <label key={i} className="search__label">
-                        <input key={i} readOnly={this.state.frozen} className="search__input" placeholder="Search" value={q} onChange={onInput}/>
+                        <input key={i} onFocus={this.removePristine} readOnly={this.state.frozen} className="search__input" placeholder="Search" value={q} onChange={onInput}/>
                     </label>
                 );
             });
@@ -50,7 +52,7 @@ export default class SearchContainer extends React.Component {
                 <form className="search__form" onSubmit={this.handleFormSubmit}>
                     {this.renderInputs()}
                     <button className="search__button" onClick={this.handleFormSubmit}>
-                        {this.state.frozen ? 'Clear' : 'Search'}
+                        {this.props.isLoading ? 'Loading...' : (this.state.pristine ? 'Clear' : 'Search')}
                     </button>
                 </form>
             </div>

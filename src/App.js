@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import MapService from './services/maps';
 import Map from './components/map';
 import SearchContainer from './components/search-container';
 import colors from './colors';
 
-export default class App extends Component {
+export default class App extends React.PureComponent {
+    state = {
+        isLoading: false
+    };
+
     map;
 
     componentDidMount() {
@@ -23,14 +27,20 @@ export default class App extends Component {
             });
     }
 
+    notLoading = () => this.setState({ isLoading: false });
+
     search = queries => {
+        this.setState({ isLoading: true });
+        this.clearMarkers();
         this.map.searchForPlaces(queries)
             .then(results => {
                 results
                     .forEach((res, i) => {
                         res.map(r => this.map.addPlaceMarker(r.geometry.location, colors[i]));
                     });
-            });
+                this.notLoading();
+            })
+            .catch(this.notLoading);
     };
 
     clearMarkers = () => this.map.removeAllPlaceMarkers();
@@ -38,7 +48,7 @@ export default class App extends Component {
     render() {
         return (
             <div>
-                <SearchContainer search={this.search} clear={this.clearMarkers} />
+                <SearchContainer isLoading={this.state.isLoading} search={this.search} clear={this.clearMarkers} />
                 <Map onRef={elem => this.dom = elem} />
             </div>
         );
